@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "../common/like";
+import Paginate from "../common/paginate";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
-    test: 1,
+    currentPage: 0,
+    pageSize: 4,
   };
 
   // Delete movie
@@ -24,18 +26,32 @@ class Movies extends Component {
     this.setState({ movies });
   };
 
+  // handle paginate
+  onSelectPage = (page) => {
+    console.log("Handle Paginate :" + page);
+    this.setState({ currentPage: page });
+  };
+
+  // chunk movies by page
+  doPaginate(currentPage, pageSize) {
+    const movies = [...this.state.movies];
+    const startIndex = currentPage * pageSize;
+    const endIndex = startIndex + pageSize;
+    return movies.slice(startIndex, endIndex);
+  }
+
   render() {
     const { length: count } = this.state.movies;
     if (count === 0) {
       return <p>There are no movies in the database.</p>;
     }
 
-    console.log("-- run --");
+    const movies = this.doPaginate(this.state.currentPage, this.state.pageSize);
 
     return (
-      <>
-        <div>Showing {count} movies in the database.</div>
-        <table className="table mt-5" style={{ maxWidth: "800px" }}>
+      <div className="p-4">
+        <div className="mb-3">Showing {count} movies in the database.</div>
+        <table className="table" style={{ maxWidth: "800px" }}>
           <thead>
             <tr>
               <th>Title</th>
@@ -47,7 +63,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => (
+            {movies.map((movie) => (
               <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
@@ -71,7 +87,14 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
-      </>
+        <Paginate
+          className="mt-1"
+          currentPage={this.state.currentPage}
+          pageSize={this.state.pageSize}
+          total={this.state.movies.length}
+          onSelectPage={this.onSelectPage}
+        />
+      </div>
     );
   }
 }
