@@ -1,4 +1,4 @@
-const Paginate = (props) => {
+const Pagination = (props) => {
   const { currentPage, pageSize, total, onSelectPage } = props;
 
   function renderListItems() {
@@ -34,4 +34,4 @@ const Paginate = (props) => {
   );
 };
 
-export default Paginate;
+export default Pagination;

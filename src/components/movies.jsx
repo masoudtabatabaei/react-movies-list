@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "../common/like";
-import Paginate from "../common/paginate";
+import Pagination from "../common/pagination";
 
 class Movies extends Component {
   state = {
@@ -41,12 +41,13 @@ class Movies extends Component {
   }
 
   render() {
-    const { length: count } = this.state.movies;
+    const { pageSize, currentPage, movies: allMovies } = this.state;
+    const { length: count } = allMovies;
     if (count === 0) {
       return <p>There are no movies in the database.</p>;
     }
 
-    const movies = this.doPaginate(this.state.currentPage, this.state.pageSize);
+    const movies = this.doPaginate(currentPage, pageSize);
 
     return (
       <div className="p-4">
@@ -87,11 +88,11 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
-        <Paginate
+        <Pagination
           className="mt-1"
-          currentPage={this.state.currentPage}
-          pageSize={this.state.pageSize}
-          total={this.state.movies.length}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          total={count}
           onSelectPage={this.onSelectPage}
         />
       </div>
