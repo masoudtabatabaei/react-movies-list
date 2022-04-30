@@ -74,6 +74,38 @@ const movies = [
     dailyRentalRate: 3.5,
     liked: false,
   },
+  {
+    _id: "5b21ca3eeb7f6fbccd459102",
+    title: "The Batman",
+    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+    numberInStock: 3,
+    dailyRentalRate: 8.0,
+    liked: false,
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd423808",
+    title: "Ambulance",
+    genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+    numberInStock: 11,
+    dailyRentalRate: 6.2,
+    liked: false,
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd45812b",
+    title: "Lady Bird",
+    genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+    numberInStock: 4,
+    dailyRentalRate: 7.4,
+    liked: false,
+  },
+  {
+    _id: "5b21ca3eeb7f6fbccd23685a",
+    title: "The Lost City",
+    genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+    numberInStock: 8,
+    dailyRentalRate: 6.6,
+    liked: false,
+  },
 ];
 
 export function getMovies() {
