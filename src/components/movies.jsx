@@ -63,14 +63,15 @@ class Movies extends Component {
       selectedGenre,
     } = this.state;
     const { length: count } = allMovies;
-    if (count === 0) {
-      return <p>There are no movies in the database.</p>;
-    }
 
     let filtered = selectedGenre
       ? allMovies.filter((movie) => movie.genre._id === selectedGenre)
       : allMovies;
     const movies = this.doPaginate(filtered, currentPage, pageSize);
+
+    if (filtered.length === 0) {
+      return <p>There are no movies in the database.</p>;
+    }
 
     return (
       <div className="p-4">
@@ -83,7 +84,9 @@ class Movies extends Component {
             />
           </div>
           <div className="col col-10">
-            <div className="mb-3">Showing {count} movies in the database.</div>
+            <div className="mb-3">
+              Showing {filtered.length} movies in the database.
+            </div>
             <table className="table" style={{ maxWidth: "800px" }}>
               <thead>
                 <tr>
