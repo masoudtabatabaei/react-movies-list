@@ -1,5 +1,3 @@
-import React from "react";
-
 const Like = (props) => {
   const { doLike, liked } = props;
   return (

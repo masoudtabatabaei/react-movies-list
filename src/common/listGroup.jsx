@@ -1,6 +1,7 @@
 const ListGroup = (props) => {
   const { genres, onSelectGenre, selectedGenre, textProperty, valueProperty } =
     props;
+
   return (
     <ul className="list-group">
       {genres.map((genre) => {
