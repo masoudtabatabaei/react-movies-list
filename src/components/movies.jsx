@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
-import Like from "../common/like";
 import Pagination from "../common/pagination";
 import ListGroup from "../common/listGroup";
+import MoviesTable from "./moviesTable";
 
 class Movies extends Component {
   state = {
@@ -87,42 +87,11 @@ class Movies extends Component {
             <div className="mb-3">
               Showing {filtered.length} movies in the database.
             </div>
-            <table className="table" style={{ maxWidth: "800px" }}>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Genre</th>
-                  <th>Stock</th>
-                  <th>Rate</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {movies.map((movie) => (
-                  <tr key={movie._id}>
-                    <td>{movie.title}</td>
-                    <td>{movie.genre.name}</td>
-                    <td>{movie.numberInStock}</td>
-                    <td>{movie.dailyRentalRate}</td>
-                    <td>
-                      <Like
-                        doLike={() => this.handlelike(movie)}
-                        liked={movie.liked}
-                      />
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-danger"
-                        onClick={() => this.handleDelete(movie)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <MoviesTable
+              movies={movies}
+              doLike={this.handlelike}
+              doDelete={this.handleDelete}
+            />
             <Pagination
               className="mt-1"
               currentPage={currentPage}
