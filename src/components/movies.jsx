@@ -76,13 +76,24 @@ class Movies extends Component {
     const { column, order } = sortColumn;
     console.log(sortColumn);
     return allMovies.sort((a, b) => {
-      if (a[column] == b[column]) {
-        return 0;
+      if (column === "genre.name") {
+        if (a["genre"].name == b["genre"].name) {
+          return 0;
+        } else {
+          let ascDescSort = order === "asc" ? 1 : -1;
+          return a["genre"].name > b["genre"].name
+            ? ascDescSort
+            : ascDescSort * -1;
+        }
       } else {
-        console.log(a[column]);
-        console.log(b[column]);
-        let ascDescSort = order === "asc" ? 1 : -1;
-        return a[column] > b[column] ? ascDescSort : ascDescSort * -1;
+        if (a[column] == b[column]) {
+          return 0;
+        } else {
+          console.log(a[column]);
+          console.log(b[column]);
+          let ascDescSort = order === "asc" ? 1 : -1;
+          return a[column] > b[column] ? ascDescSort : ascDescSort * -1;
+        }
       }
     });
   }
