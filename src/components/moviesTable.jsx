@@ -1,16 +1,18 @@
 import Like from "../common/like";
 
 const MoviesTable = (props) => {
-  const { movies, doLike, doDelete } = props;
+  const { movies, doLike, doDelete, onSort } = props;
 
   return (
     <table className="table" style={{ maxWidth: "800px" }}>
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Genre</th>
-          <th>Stock</th>
-          <th>Rate</th>
+          <th onClick={() => onSort("title")}>
+            Title <i className="fa fa-caret-up"></i>
+          </th>
+          <th onClick={() => onSort("genre.name")}>Genre</th>
+          <th onClick={() => onSort("numberInStock")}>Stock</th>
+          <th onClick={() => onSort("dailyRentalRate")}>Rate</th>
           <th></th>
           <th></th>
         </tr>

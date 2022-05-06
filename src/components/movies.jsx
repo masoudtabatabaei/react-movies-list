@@ -12,6 +12,10 @@ class Movies extends Component {
     currentPage: 0,
     pageSize: 4,
     selectedGenre: null,
+    sortColumn: {
+      column: "title",
+      order: "asc",
+    },
   };
 
   componentDidMount() {
@@ -55,19 +59,52 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre._id, currentPage: 0 });
   };
 
+  //handle sort records according to colum
+  handleSort = (column) => {
+    const sortColumn = { ...this.state.sortColumn };
+    if (sortColumn.column === column) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn.column = column;
+      sortColumn.order = "asc";
+    }
+
+    this.setState({ sortColumn });
+  };
+
+  doSort(allMovies, sortColumn) {
+    const { column, order } = sortColumn;
+    console.log(sortColumn);
+    return allMovies.sort((a, b) => {
+      if (a[column] == b[column]) {
+        return 0;
+      } else {
+        console.log(a[column]);
+        console.log(b[column]);
+        let ascDescSort = order === "asc" ? 1 : -1;
+        return a[column] > b[column] ? ascDescSort : ascDescSort * -1;
+      }
+    });
+  }
+
   render() {
+    console.log("--- rendered ----");
     const {
       pageSize,
       currentPage,
       movies: allMovies,
       selectedGenre,
+      sortColumn,
     } = this.state;
     const { length: count } = allMovies;
 
     let filtered = selectedGenre
       ? allMovies.filter((movie) => movie.genre._id === selectedGenre)
       : allMovies;
-    const movies = this.doPaginate(filtered, currentPage, pageSize);
+
+    let sorted = this.doSort(filtered, sortColumn);
+
+    const movies = this.doPaginate(sorted, currentPage, pageSize);
 
     if (filtered.length === 0) {
       return <p>There are no movies in the database.</p>;
@@ -91,6 +128,7 @@ class Movies extends Component {
               movies={movies}
               doLike={this.handlelike}
               doDelete={this.handleDelete}
+              onSort={this.handleSort}
             />
             <Pagination
               className="mt-1"
