@@ -60,46 +60,31 @@ class Movies extends Component {
   };
 
   //handle sort records according to colum
-  handleSort = (column) => {
-    const sortColumn = { ...this.state.sortColumn };
-    if (sortColumn.column === column) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.column = column;
-      sortColumn.order = "asc";
-    }
-
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
   doSort(allMovies, sortColumn) {
     const { column, order } = sortColumn;
-    console.log(sortColumn);
     return allMovies.sort((a, b) => {
+      let aValue = a[column];
+      let bValue = b[column];
+
       if (column === "genre.name") {
-        if (a["genre"].name == b["genre"].name) {
-          return 0;
-        } else {
-          let ascDescSort = order === "asc" ? 1 : -1;
-          return a["genre"].name > b["genre"].name
-            ? ascDescSort
-            : ascDescSort * -1;
-        }
+        aValue = a["genre"].name;
+        bValue = b["genre"].name;
+      }
+
+      if (aValue === bValue) {
+        return 0;
       } else {
-        if (a[column] == b[column]) {
-          return 0;
-        } else {
-          console.log(a[column]);
-          console.log(b[column]);
-          let ascDescSort = order === "asc" ? 1 : -1;
-          return a[column] > b[column] ? ascDescSort : ascDescSort * -1;
-        }
+        let ascDescSort = order === "asc" ? 1 : -1;
+        return aValue > bValue ? ascDescSort : ascDescSort * -1;
       }
     });
   }
 
   render() {
-    console.log("--- rendered ----");
     const {
       pageSize,
       currentPage,
@@ -107,7 +92,6 @@ class Movies extends Component {
       selectedGenre,
       sortColumn,
     } = this.state;
-    const { length: count } = allMovies;
 
     let filtered = selectedGenre
       ? allMovies.filter((movie) => movie.genre._id === selectedGenre)
@@ -139,6 +123,7 @@ class Movies extends Component {
               movies={movies}
               doLike={this.handlelike}
               doDelete={this.handleDelete}
+              sortColumn={sortColumn}
               onSort={this.handleSort}
             />
             <Pagination
