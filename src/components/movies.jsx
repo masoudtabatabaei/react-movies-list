@@ -43,7 +43,6 @@ class Movies extends Component {
 
   // handle paginate
   onSelectPage = (page) => {
-    console.log("Handle Paginate :" + page);
     this.setState({ currentPage: page });
   };
 
@@ -99,18 +98,21 @@ class Movies extends Component {
       : allMovies;
 
     let sorted = this.doSort(filtered, sortColumn);
-
     const movies = this.doPaginate(sorted, currentPage, pageSize);
-    console.log({ totalData: allMovies.length, data: movies });
-    return { totalData: allMovies.length, filtered: movies };
+
+    return {
+      total: allMovies.length,
+      totalFilteredData: filtered.length,
+      filtered: movies,
+    };
   };
 
   render() {
     const { pageSize, currentPage, selectedGenre, sortColumn } = this.state;
 
-    const { totalData, filtered } = this.getPageDate();
+    const { total, totalFilteredData, filtered } = this.getPageDate();
 
-    if (totalData === 0) {
+    if (total === 0) {
       return <p>There are no movies in the database.</p>;
     }
 
@@ -125,9 +127,7 @@ class Movies extends Component {
             />
           </div>
           <div className="col col-10">
-            <div className="mb-3">
-              Showing {totalData} movies in the database.
-            </div>
+            <div className="mb-3">Showing {total} movies in the database.</div>
             <MoviesTable
               movies={filtered}
               doLike={this.handlelike}
@@ -139,7 +139,7 @@ class Movies extends Component {
               className="mt-1"
               currentPage={currentPage}
               pageSize={pageSize}
-              total={filtered.length}
+              total={totalFilteredData}
               onSelectPage={this.onSelectPage}
             />
           </div>
