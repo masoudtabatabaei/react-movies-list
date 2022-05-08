@@ -84,7 +84,8 @@ class Movies extends Component {
     });
   }
 
-  render() {
+  // do sorting and paginating functionality together
+  getPageDate = () => {
     const {
       pageSize,
       currentPage,
@@ -100,8 +101,16 @@ class Movies extends Component {
     let sorted = this.doSort(filtered, sortColumn);
 
     const movies = this.doPaginate(sorted, currentPage, pageSize);
+    console.log({ totalData: allMovies.length, data: movies });
+    return { totalData: allMovies.length, filtered: movies };
+  };
 
-    if (allMovies.length === 0) {
+  render() {
+    const { pageSize, currentPage, selectedGenre, sortColumn } = this.state;
+
+    const { totalData, filtered } = this.getPageDate();
+
+    if (totalData === 0) {
       return <p>There are no movies in the database.</p>;
     }
 
@@ -112,15 +121,15 @@ class Movies extends Component {
             <ListGroup
               genres={this.state.genres}
               onSelectGenre={this.handleSelectGenre}
-              selectedGenre={this.state.selectedGenre}
+              selectedGenre={selectedGenre}
             />
           </div>
           <div className="col col-10">
             <div className="mb-3">
-              Showing {allMovies.length} movies in the database.
+              Showing {totalData} movies in the database.
             </div>
             <MoviesTable
-              movies={movies}
+              movies={filtered}
               doLike={this.handlelike}
               doDelete={this.handleDelete}
               sortColumn={sortColumn}
