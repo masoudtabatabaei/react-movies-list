@@ -101,7 +101,7 @@ class Movies extends Component {
 
     const movies = this.doPaginate(sorted, currentPage, pageSize);
 
-    if (filtered.length === 0) {
+    if (allMovies.length === 0) {
       return <p>There are no movies in the database.</p>;
     }
 
@@ -117,7 +117,7 @@ class Movies extends Component {
           </div>
           <div className="col col-10">
             <div className="mb-3">
-              Showing {filtered.length} movies in the database.
+              Showing {allMovies.length} movies in the database.
             </div>
             <MoviesTable
               movies={movies}
