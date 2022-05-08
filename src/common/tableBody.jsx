@@ -5,9 +5,9 @@ class TableBody extends Component {
   renderCell(column, row) {
     if (column.key) {
       return column.content(row);
-    } else {
-      return _.get(row, column.path);
     }
+
+    return _.get(row, column.path);
   }
 
   render() {
