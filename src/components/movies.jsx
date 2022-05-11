@@ -117,32 +117,30 @@ class Movies extends Component {
     }
 
     return (
-      <div className="p-4">
-        <div className="row">
-          <div className="col">
-            <ListGroup
-              genres={this.state.genres}
-              onSelectGenre={this.handleSelectGenre}
-              selectedGenre={selectedGenre}
-            />
-          </div>
-          <div className="col col-10">
-            <div className="mb-3">Showing {total} movies in the database.</div>
-            <MoviesTable
-              movies={filtered}
-              doLike={this.handlelike}
-              doDelete={this.handleDelete}
-              sortColumn={sortColumn}
-              onSort={this.handleSort}
-            />
-            <Pagination
-              className="mt-1"
-              currentPage={currentPage}
-              pageSize={pageSize}
-              total={totalFilteredData}
-              onSelectPage={this.onSelectPage}
-            />
-          </div>
+      <div className="row">
+        <div className="col">
+          <ListGroup
+            genres={this.state.genres}
+            onSelectGenre={this.handleSelectGenre}
+            selectedGenre={selectedGenre}
+          />
+        </div>
+        <div className="col col-10">
+          <div className="mb-3">Showing {total} movies in the database.</div>
+          <MoviesTable
+            movies={filtered}
+            doLike={this.handlelike}
+            doDelete={this.handleDelete}
+            sortColumn={sortColumn}
+            onSort={this.handleSort}
+          />
+          <Pagination
+            className="mt-1"
+            currentPage={currentPage}
+            pageSize={pageSize}
+            total={totalFilteredData}
+            onSelectPage={this.onSelectPage}
+          />
         </div>
       </div>
     );

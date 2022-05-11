@@ -1,4 +1,4 @@
-import Ract, { Component } from "react";
+import { Component } from "react";
 
 class TableHeader extends Component {
   // render sort icon in table header columns
