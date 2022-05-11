@@ -1,11 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-      <NavLink className="navbar-brand" to="/movies">
+      <Link className="navbar-brand" to="/movies">
         Movies DB
-      </NavLink>
+      </Link>
       <button className="navbar-toggler" type="button">
         <span className="navbar-toggler-icon"></span>
       </button>
