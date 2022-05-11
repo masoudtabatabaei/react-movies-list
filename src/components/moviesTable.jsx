@@ -1,21 +1,27 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Like from "../common/like";
 import Table from "../common/table";
+import _ from "lodash";
 
 class MoviesTable extends Component {
   columns = [
-    { label: "Title", path: "title" },
+    {
+      label: "Title",
+      path: "title",
+      content: (data) => (
+        <Link to={"/movies/" + _.get(data, "_id")}>{_.get(data, "title")}</Link>
+      ),
+    },
     { label: "Genre", path: "genre.name" },
     { label: "Stock", path: "numberInStock" },
     { label: "Rate", path: "dailyRentalRate" },
     {
-      key: "like",
       content: (data) => (
         <Like doLike={() => this.props.doLike(data)} liked={data.liked} />
       ),
     },
     {
-      key: "delete",
       content: (data) => (
         <button
           className="btn btn-sm btn-danger"

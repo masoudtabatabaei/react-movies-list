@@ -5,6 +5,7 @@ import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import NotFound from "./components/notFound";
 import Navbar from "./common/navbar";
+import MovieForm from "./components/movieForm";
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<Navigate replace to="/movies" />} />
             <Route path="/movies" element={<Movies />} />
+            <Route path="/movies/:id" element={<MovieForm />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/rentals" element={<Rentals />} />
             <Route path="/not-found" element={<NotFound />} />
