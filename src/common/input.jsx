@@ -1,6 +1,5 @@
 const Input = (props) => {
   const { name, label, value, onChange, error, type } = props;
-  console.log("error: " + error);
   return (
     <>
       <div className="form-group">

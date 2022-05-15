@@ -15,7 +15,22 @@ class LoginForm extends Component {
   handleChange = (e) => {
     const account = { ...this.state.account };
     account[e.target.name] = e.target.value;
-    this.setState({ account });
+    const errors = this.validateProperty(account, e.target.name);
+
+    this.setState({ account, errors });
+  };
+
+  // validate on change
+  validateProperty = (inputs, propName) => {
+    const errors = { ...this.state.errors };
+
+    if (inputs[propName].trim() === "") {
+      errors[propName] = `${propName} is required`;
+    } else {
+      delete errors[propName];
+    }
+
+    return errors;
   };
 
   // validate form inputs
@@ -48,6 +63,7 @@ class LoginForm extends Component {
 
   render() {
     const { account, errors } = this.state;
+    const submitBtnStatus = errors.length === 0 ? false : true;
     return (
       <form method="post" onSubmit={this.handleSubmit}>
         <Input
